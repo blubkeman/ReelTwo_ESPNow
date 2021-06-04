@@ -1,5 +1,5 @@
 #include "ReelTwo.h"
-#include "ESP_NOW.h"
+#include "ESP_NOW_receiver.h"
 
 // ------------------------------
 // ESP-NOW, communication with dome
@@ -35,15 +35,10 @@ void setup()
     Serial.begin(115200);
     while (!Serial) { delay(500); }  // Give Serial time to start.
 
-    // Initialize ESP-NOW
-    espNOW.begin();
+    SetupEvent::ready();
 }
 
 void loop()
 {
-  if (espNOW.available())
-  {
-    interpretController(espNOW.buffer);   // Process the controller state data.
-    espNOW.flush();                       // Clear the buffer for the next cycle.
-  }
+    AnimatedEvent::process();
 }

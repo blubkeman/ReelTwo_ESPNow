@@ -1,5 +1,5 @@
 #include "ReelTwo.h"
-#include "ESP_NOW.h"
+#include "ESP_NOW_sender.h"
 #include "bt/PSController/PSController.h"
 
 // ------------------------------
@@ -7,9 +7,7 @@
 
 // Put the WiFi MAC address of the EPS32 receiver board here
 uint8_t espnowReceiverAddress[] = {0xFF, 0xFF, 0xFF, 0xFF, 0xFF, 0xFF};
-
 ESP_NOW espNOW(espnowReceiverAddress);  // Create an ESP-NOW sender
-ESP_NOW* ESP_NOW::anchor = { NULL };    // This is needed to help with the callback functions
 
 // ------------------------------
 // Foward declarations
@@ -108,8 +106,7 @@ void setup()
     Serial.begin(115200);
     while (!Serial) { delay(500); }  // Give Serial time to start.
 
-    // Initialize ESP-NOW
-    espNOW.begin();
+    SetupEvent::ready();
 }
 
 void loop() {}
